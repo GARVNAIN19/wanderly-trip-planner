@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Trip Planner - Plan Your Perfect Journey</title>
+    <meta name="description"
+        content="Plan your dream trip with AI-powered personalized itineraries, hotel recommendations, and travel insights.">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/planner-styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Currency Dropdown Styles */
+        .currency-dropdown {
+            padding: 6px 12px;
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            outline: none;
+        }
+
+        .currency-dropdown:hover {
+            background: rgba(30, 41, 59, 1);
+            border-color: var(--primary);
+        }
+
+        .currency-dropdown:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bg-animation"></div>
+
+    <div class="planner-container">
+        <!-- Header -->
+        <header class="planner-header">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <i class="fa-solid fa-plane-departure"></i>
+                    <span>Wanderly</span>
+                </a>
+                <nav class="header-nav">
+                    <a href="index.html" class="nav-link">
+                        <i class="fa-solid fa-home"></i> Home
+                    </a>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="planner-main">
+            <!-- Planning Form Section -->
+            <section class="planning-form-section" id="form-section">
+                <div class="form-container glass">
+                    <div class="form-header">
+                        <h1 class="form-title">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i>
+                            AI Trip Planner
+                        </h1>
+                        <p class="form-subtitle">Plan your dream trip with personalized AI-powered itineraries</p>
+                    </div>
+
+                    <form id="trip-form" class="trip-form">
+                        <!-- Destination Field -->
+                        <div class="form-group">
+                            <label for="destination" class="form-label">
+                                <i class="fa-solid fa-location-dot"></i>
+                                Destination
+                            </label>
+                            <div class="input-wrapper">
+                                <input type="text" id="destination" class="form-input"
+                                    placeholder="Where do you want to go? (e.g., Paris, Tokyo, New York)" required
+                                    autocomplete="off">
+                                <div id="destination-suggestions" class="suggestions-dropdown"></div>
+                            </div>
+                        </div>
+
+                        <!-- Travel Days Field -->
+                        <div class="form-group">
+                            <label for="travel-days" class="form-label">
+                                <i class="fa-solid fa-calendar-days"></i>
+                                Travel Duration
+                            </label>
+                            <select id="travel-days" class="form-select" required>
+                                <option value="">Select duration</option>
+                                <option value="1">1 day</option>
+                                <option value="2">2 days</option>
+                                <option value="3" selected>3 days</option>
+                                <option value="4">4 days</option>
+                                <option value="5">5 days</option>
+                                <option value="6">6 days</option>
+                                <option value="7">7 days</option>
+                                <option value="10">10 days</option>
+                                <option value="14">14 days</option>
+                            </select>
+                        </div>
+
+                        <!-- Travel Style Field -->
+                        <div class="form-group">
+                            <label for="travel-style" class="form-label">
+                                <i class="fa-solid fa-heart"></i>
+                                Travel Style
+                            </label>
+                            <select id="travel-style" class="form-select" required>
+                                <option value="">Select your style</option>
+                                <option value="Relaxation">Relaxation & Leisure</option>
+                                <option value="Cultural and Historical">Cultural & Historical</option>
+                                <option value="Romantic for Couples">Romantic for Couples</option>
+                                <option value="Family-Friendly">Family-Friendly</option>
+                                <option value="Adventure and Outdoor">Adventure & Outdoor</option>
+                                <option value="Food and Culinary">Food & Culinary</option>
+                                <option value="Nightlife and Entertainment">Nightlife & Entertainment</option>
+                            </select>
+                        </div>
+
+                        <!-- Budget Field -->
+                        <div class="form-group">
+                            <label for="budget" class="form-label">
+                                <i class="fa-solid fa-wallet"></i>
+                                Budget Range
+                            </label>
+                            <select id="budget" class="form-select" required>
+                                <option value="">Select budget</option>
+                                <option value="Budget">Budget ($50-100/day)</option>
+                                <option value="Mid-range" selected>Mid-range ($100-250/day)</option>
+                                <option value="Luxury">Luxury ($250+/day)</option>
+                            </select>
+                        </div>
+
+                        <!-- Additional Preferences -->
+                        <div class="form-group">
+                            <label for="preferences" class="form-label">
+                                <i class="fa-solid fa-comment"></i>
+                                Additional Preferences (Optional)
+                            </label>
+                            <textarea id="preferences" class="form-textarea"
+                                placeholder="Any specific requests? (e.g., vegetarian restaurants, accessible locations, must-see attractions)"
+                                rows="3"></textarea>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="btn btn-primary btn-large" id="generate-btn">
+                            <i class="fa-solid fa-sparkles"></i>
+                            Generate My Trip Plan
+                        </button>
+                    </form>
+
+                    <div id="form-loader" class="form-loader" style="display: none;">
+                        <div class="loader-spinner"></div>
+                        <p class="loader-text">Creating your perfect itinerary...</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Results Section -->
+            <section class="results-section" id="results-section" style="display: none;">
+                <div class="results-header">
+                    <button class="btn-back" id="back-btn">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        Plan Another Trip
+                    </button>
+                    <h2 class="results-title">Your Personalized Trip Plan</h2>
+                </div>
+
+                <div class="results-grid">
+                    <!-- Trip Overview Card -->
+                    <div class="card glass trip-overview-card">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="fa-solid fa-map-location-dot"></i>
+                                Trip Overview
+                            </h3>
+                        </div>
+                        <div class="trip-overview-content">
+                            <div class="overview-item">
+                                <span class="overview-label">Destination:</span>
+                                <span class="overview-value" id="overview-destination">--</span>
+                            </div>
+                            <div class="overview-item">
+                                <span class="overview-label">Duration:</span>
+                                <span class="overview-value" id="overview-duration">--</span>
+                            </div>
+                            <div class="overview-item">
+                                <span class="overview-label">Style:</span>
+                                <span class="overview-value" id="overview-style">--</span>
+                            </div>
+                            <div class="overview-item">
+                                <span class="overview-label">Budget:</span>
+                                <span class="overview-value" id="overview-budget">--</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Weather Card -->
+                    <div class="card glass weather-card">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="fa-solid fa-cloud-sun"></i>
+                                Current Weather
+                            </h3>
+                        </div>
+                        <div class="weather-content">
+                            <div class="weather-main">
+                                <div id="weather-icon-display"></div>
+                                <div class="weather-temp" id="weather-temp">--°</div>
+                            </div>
+                            <p class="weather-desc" id="weather-description">--</p>
+                            <div class="weather-details">
+                                <div class="weather-detail">
+                                    <i class="fa-solid fa-droplet"></i>
+                                    <span id="weather-humidity">--%</span>
+                                </div>
+                                <div class="weather-detail">
+                                    <i class="fa-solid fa-wind"></i>
+                                    <span id="weather-wind">--</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cost Breakdown Card -->
+                    <div class="card glass cost-card">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="fa-solid fa-money-bill-wave"></i>
+                                Estimated Costs
+                            </h3>
+                        </div>
+                        <div class="cost-breakdown">
+                            <div class="cost-item">
+                                <span><i class="fa-solid fa-hotel"></i> Accommodation</span>
+                                <strong id="cost-accommodation">--</strong>
+                            </div>
+                            <div class="cost-item">
+                                <span><i class="fa-solid fa-plane"></i> Transportation</span>
+                                <strong id="cost-transportation">--</strong>
+                            </div>
+                            <div class="cost-item">
+                                <span><i class="fa-solid fa-utensils"></i> Food & Dining</span>
+                                <strong id="cost-food">--</strong>
+                            </div>
+                            <div class="cost-item">
+                                <span><i class="fa-solid fa-ticket"></i> Activities</span>
+                                <strong id="cost-activities">--</strong>
+                            </div>
+                            <div class="cost-total">
+                                <span>Total Estimate</span>
+                                <strong id="cost-total">--</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Daily Itinerary -->
+                    <div class="card glass itinerary-card full-width">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="fa-solid fa-route"></i>
+                                Daily Itinerary
+                            </h3>
+                        </div>
+                        <div id="daily-itinerary" class="daily-itinerary">
+                            <!-- Populated by AI -->
+                        </div>
+                    </div>
+
+                    <!-- Recommended Hotels -->
+                    <div class="card glass hotels-card full-width">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="fa-solid fa-bed"></i>
+                                Recommended Hotels
+                            </h3>
+                        </div>
+                        <div id="hotels-grid" class="hotels-grid">
+                            <!-- Populated by AI -->
+                        </div>
+                    </div>
+
+                    <!-- Packing List -->
+                    <div class="card glass packing-card">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="fa-solid fa-suitcase-rolling"></i>
+                                Packing Essentials
+                            </h3>
+                        </div>
+                        <div id="packing-list" class="packing-list">
+                            <!-- Populated by AI -->
+                        </div>
+                    </div>
+
+                    <!-- Travel Tips -->
+                    <div class="card glass tips-card">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="fa-solid fa-lightbulb"></i>
+                                Travel Tips
+                            </h3>
+                        </div>
+                        <div id="travel-tips" class="travel-tips">
+                            <!-- Populated by AI -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+
+    <script src="js/planner-app.js"></script>
+    <script src="js/currency-converter.js"></script>
+    <script src="js/custom-options.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wanderly - Next Gen Travel Planner</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="bg-animation"></div>
+    <img id="bg-image" class="bg-image"
+        src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=2070&auto=format&fit=crop"
+        alt="Background">
+
+    <div class="landing-container">
+        <div class="glass hero-content" style="padding: 60px; border-radius: 32px;">
+            <h1>Plan Your Dream Trip<br>with AI Precision</h1>
+            <p class="hero-subtitle">Experience the future of travel. Smart itineraries, real-time weather, and
+                personalized suggestions.</p>
+
+            <div style="display: flex; gap: 20px; justify-content: center; margin-top: 30px;">
+                <a href="planner.html" class="btn btn-primary">
+                    <i class="fa-solid fa-rocket" style="margin-right: 10px;"></i> Start Planning
+                </a>
+            </div>
+
+            <div
+                style="margin-top: 40px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; color: var(--text-muted); max-width: 600px; margin-left: auto; margin-right: auto;">
+                <div style="text-align: center;">
+                    <i class="fa-solid fa-brain fa-2x" style="margin-bottom: 10px; color: var(--secondary);"></i>
+                    <p>AI Powered</p>
+                </div>
+                <div style="text-align: center;">
+                    <i class="fa-solid fa-cloud-sun fa-2x" style="margin-bottom: 10px; color: var(--accent);"></i>
+                    <p>Real-time Weather</p>
+                </div>
+                <div style="text-align: center;">
+                    <i class="fa-solid fa-coins fa-2x" style="margin-bottom: 10px; color: var(--primary);"></i>
+                    <p>Budget Optimization</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simple background rotation script
+        const images = [
+            'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=2070&auto=format&fit=crop',
+            'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2073&auto=format&fit=crop',
+            'https://images.unsplash.com/photo-1493246507139-91e8fad9978e?q=80&w=2070&auto=format&fit=crop',
+            'https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?q=80&w=2070&auto=format&fit=crop'
+        ];
+
+        let currentImage = 0;
+        const bgImage = document.getElementById('bg-image');
+
+        setInterval(() => {
+            currentImage = (currentImage + 1) % images.length;
+            bgImage.style.opacity = 0;
+            setTimeout(() => {
+                bgImage.src = images[currentImage];
+                bgImage.onload = () => {
+                    bgImage.style.opacity = 0.4;
+                };
+            }, 1000);
+        }, 8000);
+    </script>
+</body>
+
+</html>
