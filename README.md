@@ -1,6 +1,7 @@
 # 🌍 Wanderly - AI Trip Planner
 
 **Wanderly** is a next-generation travel planning application that leverages the power of AI to create personalized, day-by-day itineraries for any destination in the world.
+LINK:- https://wanderly-ai.netlify.app/
 
 ![Wanderly Banner](https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=2070&auto=format&fit=crop)
 
